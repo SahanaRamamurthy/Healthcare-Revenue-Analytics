@@ -1,0 +1,7 @@
+patient_id,full_name,state,insurance_type,health_fund,age,chronic_conditions,total_billed,churn_probability,revenue_at_risk
+1407,Olivia Martin,VIC,private_fund,HCF,32,Cardiovascular Disease,1850.17,0.7198166009071854,1331.783080500447
+2934,Henry Taylor,NSW,bulk_bill,,74,,895.21,0.70566717169757,631.7203087753817
+2634,Mia Taylor,QLD,bulk_bill,,41,Cardiovascular Disease,886.51,0.6701427997857682,594.0882934380813
+2088,Chloe Martin,NSW,private_fund,Bupa,61,Hypertension,357.57,0.7442412569425795,266.11834624495816
+532,Olivia Mitchell,SA,private_fund,Medibank,55,Hypertension,385.19,0.6158168835569462,237.2065053773001
+798,Hugo Wilson,NSW,bulk_bill,,29,Cardiovascular Disease,290.65,0.608840862203055,176.95959659931793

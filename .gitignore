@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Data — raw source files (large/sensitive)
+data/raw/
+
+# Reports — PDF (generated artifact)
+reports/HealthFirst_Revenue_Intelligence_Guide.pdf
+
+# Claude Code internal config
+.claude/
+
+# macOS
+.DS_Store
