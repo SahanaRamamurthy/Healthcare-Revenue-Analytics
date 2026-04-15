@@ -12,20 +12,6 @@ This project simulates exactly what a data analyst would do in that situation:
 
 Everything here — data, clinics, patients, appointments — is **synthetic (fake but realistic)**. The analysis, methodology, and business thinking are real.
 
----
-
-## ❓ Why This Project?
-
-Most data analytics projects stop at "here's a chart." This one goes further:
-
-- It starts with a **real business question** (why is revenue falling?)
-- It follows a **structured analytical process** (clean → analyse → model → recommend)
-- It produces **dollar-quantified outcomes** (not just insights, but "fix this and recover $X")
-- It ends with a **dashboard** built for decision-makers, not just data people
-
-This is what analytics looks like in a real healthcare organisation.
-
----
 
 ## 🔍 The Business Problem
 
