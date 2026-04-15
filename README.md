@@ -1,120 +1,226 @@
-# HealthFirst Australia — Revenue Intelligence System
+# 🏥 HealthFirst Australia — Revenue Intelligence System
 
-> **End-to-end data analytics portfolio project** — diagnosing a healthcare network's revenue decline, predicting patient churn, quantifying billing leakage, and delivering actionable clinical and operational recommendations.
+<div align="center">
 
----
+**An end-to-end healthcare data analytics portfolio project**
 
-## Project Overview
+*Diagnosing a 15% revenue decline · Predicting patient churn · Quantifying billing leakage · Delivering actionable recommendations*
 
-HealthFirst Australia operates 20 clinics across all Australian states and territories. In Month 7 of this analysis, the network experienced a −15% revenue drop, an −8 percentage point fall in bulk billing rate, and a +4 percentage point rise in no-shows — driven by a Medicare policy change and growing patient out-of-pocket costs.
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?style=flat-square&logo=jupyter)
+![Plotly](https://img.shields.io/badge/Plotly-Dashboard-3D4DB7?style=flat-square&logo=plotly)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat-square&logo=scikit-learn)
 
-This project:
-1. Generates realistic synthetic healthcare data (patients, appointments, billing claims, satisfaction surveys)
-2. Cleans and audits 7 intentional data quality issues
-3. Calculates 12 Australian healthcare KPIs
-4. Predicts patient churn using machine learning
-5. Segments patients by engagement using RFV scoring
-6. Quantifies billing leakage across 5 buckets
-7. Delivers dollar-quantified recovery recommendations
-8. Presents everything in an interactive Plotly dashboard
+</div>
 
 ---
 
-## Quick Start
+## 📖 The Story
 
+> *It's Month 7. The CFO of HealthFirst Australia walks in with a report showing a **−15% revenue drop**. No one knows why. Appointments are down. Patients aren't coming back. Bulk billing has collapsed.*
+>
+> *This project is the data team's response.*
+
+We built a full analytics system from scratch — generating realistic patient data, cleaning it, analysing it, predicting which patients are at risk of leaving, finding where money is being lost, and presenting everything in a live interactive dashboard.
+
+---
+
+## 🎯 Business Questions Answered
+
+| # | Question | How We Answer It |
+|---|----------|-----------------|
+| 1 | Why did revenue drop in Month 7? | KPI decomposition + waterfall chart |
+| 2 | Which patients are about to leave? | Gradient Boosting churn model |
+| 3 | Which patient groups matter most? | RFV segmentation (7 tiers) |
+| 4 | Which specialties are most profitable? | Specialty P&L analysis |
+| 5 | Where is billing money being lost? | 5-bucket leakage analysis |
+| 6 | What should we do about it? | Dollar-quantified recommendations |
+
+---
+
+## 🗂️ Project Structure
+
+```
+revenue-intelligence/
+│
+├── 📁 data/
+│   ├── raw/              ← Original synthetic data (never modified)
+│   ├── cleaned/          ← Data after fixing 7 quality issues
+│   └── processed/        ← Scored, segmented, analysis-ready data
+│
+├── 📓 notebooks/         ← Run in order: 01 → 06
+│   ├── 01_data_cleaning.ipynb
+│   ├── 02_kpi_analysis.ipynb
+│   ├── 03_churn_prediction.ipynb
+│   ├── 04_patient_segmentation.ipynb
+│   ├── 05_specialty_revenue.ipynb
+│   └── 06_billing_leakage.ipynb
+│
+├── 🐍 src/
+│   ├── generate_data.py
+│   ├── churn_model.py
+│   └── recommendations.py
+│
+├── 📊 dashboard/
+│   ├── app.py
+│   └── dashboard_export.html
+│
+├── 📄 reports/
+└── 🗄️ sql/
+```
+
+---
+
+## 🔄 Data Flow
+
+```
+src/generate_data.py
+        ↓
+   data/raw/
+        ↓
+01_data_cleaning.ipynb
+        ↓
+   data/cleaned/
+        ↓
+02 → 06 notebooks
+        ↓
+   data/processed/
+        ↓
+dashboard/app.py  +  src/recommendations.py
+        ↓
+   dashboard_export.html  +  reports/recommendations.csv
+```
+
+---
+
+## 🚀 How to Run
+
+**Step 1 — Install dependencies**
 ```bash
-# Install dependencies
 pip install -r requirements.txt
+```
 
-# Generate synthetic healthcare data
+**Step 2 — Generate synthetic data**
+```bash
 python src/generate_data.py
+```
 
-# Run all notebooks in order
-jupyter nbconvert --to notebook --execute notebooks/01_data_cleaning.ipynb --output notebooks/01_data_cleaning.ipynb
-jupyter nbconvert --to notebook --execute notebooks/02_kpi_analysis.ipynb --output notebooks/02_kpi_analysis.ipynb
-jupyter nbconvert --to notebook --execute notebooks/03_churn_prediction.ipynb --output notebooks/03_churn_prediction.ipynb
-jupyter nbconvert --to notebook --execute notebooks/04_patient_segmentation.ipynb --output notebooks/04_patient_segmentation.ipynb
-jupyter nbconvert --to notebook --execute notebooks/05_specialty_revenue.ipynb --output notebooks/05_specialty_revenue.ipynb
-jupyter nbconvert --to notebook --execute notebooks/06_billing_leakage.ipynb --output notebooks/06_billing_leakage.ipynb
+**Step 3 — Run notebooks in order**
+```bash
+jupyter notebook
+```
+Open and run each notebook from `01_data_cleaning` through to `06_billing_leakage`.
 
-# Generate recommendations report
-python src/recommendations.py
-
-# Open dashboard (no server needed)
+**Step 4 — View the dashboard**
+```bash
 open dashboard/dashboard_export.html
+```
 
-# OR run live Dash server
-python dashboard/app.py
+**Step 5 — Generate recommendations**
+```bash
+python src/recommendations.py
 ```
 
 ---
 
-## Architecture
+## 🧠 Machine Learning — Churn Model
 
-### Data Flow
+The churn model in `src/churn_model.py` uses a **Gradient Boosting classifier** to predict the probability that each patient will stop visiting.
 
-```
-data/raw/          →  data/cleaned/      →  data/processed/    →  reports/ + dashboard/
-(5 CSV files)          (cleaned CSVs)        (scored, segmented)
-```
+**Top predictors:**
+- Days since last visit
+- No-show rate
+- Average satisfaction score
+- Insurance type
+- Average wait days
 
-### Notebooks (run in order)
-
-| Notebook | Purpose | Key Outputs |
-|---|---|---|
-| `01_data_cleaning.ipynb` | Fix 7 data quality issues | `data/cleaned/*.csv`, `reports/data_quality_report.png` |
-| `02_kpi_analysis.ipynb` | 12 healthcare KPIs + Month 7 RCA | `reports/revenue_trend.png`, `rca_waterfall.png` |
-| `03_churn_prediction.ipynb` | ML churn model (Gradient Boosting) | `data/processed/patients_churn_scored.csv` |
-| `04_patient_segmentation.ipynb` | RFV segmentation (7 segments) | `data/processed/patient_segments.csv` |
-| `05_specialty_revenue.ipynb` | Specialty P&L + telehealth trend | `data/processed/specialty_profitability.csv` |
-| `06_billing_leakage.ipynb` | 5-bucket leakage + recovery scenarios | `data/processed/leakage_summary.csv` |
-
-### Key Source Files
-
-| File | Purpose |
-|---|---|
-| `src/generate_data.py` | Generates all 5 synthetic raw CSV files |
-| `src/churn_model.py` | Reusable ML module: build_features, train_model, score_customers |
-| `src/recommendations.py` | Reads processed data → outputs recommendations.csv + .json |
-| `dashboard/app.py` | Plotly/Dash dashboard with static HTML export |
-| `sql/schema.sql` | 5-table PostgreSQL schema |
-| `sql/cleaning_queries.sql` | Audit + fix queries for all 7 data issues |
-| `sql/kpi_queries.sql` | 12 KPI queries |
-| `sql/analysis_queries.sql` | Root cause, churn features, leakage analysis |
+**Output:** Each patient gets a `churn_probability` score and a `risk_band` (Low / Medium / High).
 
 ---
 
-## Australian Healthcare Context
+## 💸 Billing Leakage — 5 Buckets
 
-| Term | Meaning |
-|---|---|
-| **Bulk billing** | Doctor bills Medicare directly; patient pays nothing out-of-pocket |
-| **Gap payment** | Patient pays the difference between scheduled fee and Medicare rebate |
-| **Schedule fee** | Medicare Benefits Schedule (MBS) fee set by the federal government |
-| **Medicare rebate** | Government reimbursement (typically 85% of schedule fee for GP) |
-| **Health fund** | Private health insurer (Medibank, Bupa, HCF, NIB, HBF, ahm, etc.) |
-| **Bulk billing rate** | % of consultations billed under bulk billing — key policy metric |
+| Bucket | What It Means |
+|--------|--------------|
+| Medicare rejections | Claims rejected by Medicare due to errors or eligibility issues |
+| Private insurance rejections | Claims rejected by private health funds |
+| No-show lost revenue | Appointments missed with no cancellation notice |
+| Self-pay defaults | Patients who owe gap fees but haven't paid |
+| Bulk billing rate erosion | Revenue lost from shifting away from bulk billing |
 
 ---
 
-## Data Summary
+## 🏥 Australian Healthcare — Key Terms
+
+| Term | Simple Explanation |
+|------|--------------------|
+| **Bulk billing** | Doctor bills Medicare directly — patient pays $0 out of pocket |
+| **Gap payment** | Patient pays the difference between the doctor's fee and Medicare rebate |
+| **Medicare** | Australia's universal government health insurance scheme |
+| **Schedule fee** | The standard government-set fee for each type of appointment |
+| **Health fund** | Private health insurer (Medibank, Bupa, HCF, NIB, etc.) |
+| **Churn** | A patient who stops returning to the clinic |
+| **RFV** | Recency (last visit), Frequency (how often), Value (how much spent) |
+| **NPS** | Net Promoter Score — likelihood of recommending the clinic to others |
+
+---
+
+## 🛠️ Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| Python | Core language |
+| Pandas | Data cleaning & analysis |
+| scikit-learn | Machine learning pipeline |
+| XGBoost | Gradient boosting classifier |
+| Plotly / Dash | Interactive dashboard |
+| Matplotlib | Static chart generation |
+| PostgreSQL | Schema design & query reference |
+| Jupyter | Step-by-step analysis notebooks |
+
+---
+
+## 📋 Data Summary
 
 | Table | Rows | Key Fields |
-|---|---|---|
+|-------|------|-----------|
 | patients | 3,000 | state, insurance_type, churn_flag, total_billed |
 | staff | 80 | specialty, clinic_name, state, clinic_type |
-| appointments | ~20,000 | billing_type, status, wait_days, billed_amount, patient_gap |
+| appointments | ~20,000 | billing_type, status, wait_days, billed_amount |
 | satisfaction_surveys | ~3,900 | overall_score, nps_score, would_recommend |
 | billing_claims | ~11,000 | claim_type, claim_status, rejected_amount |
 
 ---
 
-## 7 Intentional Data Quality Issues
+## 🔍 7 Intentional Data Quality Issues
 
-1. NULL `patient_gap` values (bulk-billed patients)
-2. 60 duplicate appointment rows
-3. Inconsistent specialty names (`mental health` / `MH` / `Mental_Health`)
-4. Survey dates before appointment date (impossible)
-5. NULL satisfaction scores (~4% of surveys)
-6. Invalid Medicare number format (~2% of patients)
-7. Non-ISO appointment date strings (`DD/MM/YYYY` format)
+| # | Issue | Impact |
+|---|-------|--------|
+| 1 | NULL `patient_gap` for bulk-billed patients | Breaks revenue calculations |
+| 2 | 60 duplicate appointment rows | Inflates appointment counts |
+| 3 | Inconsistent specialty names | Breaks grouping & aggregation |
+| 4 | Survey dates before appointment date | Logically impossible timestamps |
+| 5 | NULL satisfaction scores (~4%) | Skews average scores |
+| 6 | Invalid Medicare number format (~2%) | Fails claim validation |
+| 7 | Non-standard date format (`DD/MM/YYYY`) | Breaks date parsing |
+
+---
+
+## 📁 SQL Reference
+
+| File | Contents |
+|------|---------|
+| `schema.sql` | 5-table database schema with indexes |
+| `cleaning_queries.sql` | Audit + fix queries for all 7 data issues |
+| `kpi_queries.sql` | 12 KPI calculation queries |
+| `analysis_queries.sql` | Root cause, churn features, leakage analysis |
+
+---
+
+<div align="center">
+
+*Built with Python & Plotly · Synthetic data only · No real patient information used*
+
+**[View Repository](https://github.com/SahanaRamamurthy/Healthcare-Revenue-Analytics)**
+
+</div>
