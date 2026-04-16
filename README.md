@@ -1,6 +1,6 @@
-# 🏥 HealthFirst Australia — Revenue Intelligence System
+# HealthFirst Australia — Revenue Intelligence System
 
-## 📌 Overview
+## Overview
 
 HealthFirst Australia is a fictional private healthcare network operating 8 clinics across Australia. In Month 7, the network reported a **sudden 15% revenue decline** — and no one knew why.
 
@@ -13,7 +13,7 @@ This project simulates exactly what a data analyst would do in that situation:
 Everything here — data, clinics, patients, appointments — is **synthetic (fake but realistic)**. The analysis, methodology, and business thinking are real.
 
 
-## 🔍 The Business Problem
+## The Business Problem
 
 In Month 7, the Australian federal government changed its **Medicare bulk billing policy** — reducing incentive payments to doctors who bulk bill. As a result:
 
@@ -30,7 +30,7 @@ The data team's job: **prove this, quantify it, and tell management what to do n
 
 ---
 
-## 🧭 Analytical Approach
+## Analytical Approach
 
 The project follows a structured, end-to-end analytical workflow:
 
@@ -47,7 +47,7 @@ The project follows a structured, end-to-end analytical workflow:
 
 ---
 
-## 📊 Key Findings
+## Key Findings
 
 **Root Cause of Revenue Drop:**
 The Month 7 decline breaks down into three effects:
@@ -71,7 +71,7 @@ Across 5 leakage buckets, the analysis found recoverable revenue through:
 
 ---
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ```
 src/generate_data.py
@@ -98,7 +98,7 @@ dashboard_export.html      ← Self-contained, opens in any browser
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Tool | Why I Used It |
 |------|--------------|
@@ -115,7 +115,7 @@ dashboard_export.html      ← Self-contained, opens in any browser
 
 ---
 
-## 📓 Notebooks — What Each One Does
+## Notebooks — What Each One Does
 
 | Notebook | What I Did | Business Output |
 |----------|-----------|----------------|
@@ -128,7 +128,7 @@ dashboard_export.html      ← Self-contained, opens in any browser
 
 ---
 
-## 🧠 Machine Learning — Churn Model
+## Machine Learning — Churn Model
 
 **Why:** Retaining an existing patient costs far less than acquiring a new one. Knowing *who* is about to leave allows the clinic to intervene before it's too late.
 
@@ -145,7 +145,7 @@ dashboard_export.html      ← Self-contained, opens in any browser
 
 ---
 
-## 💸 Billing Leakage — 5 Buckets
+## Billing Leakage — 5 Buckets
 
 **Why:** Revenue isn't only lost when patients don't show up — it's also lost silently through billing errors, rejected claims, and unpaid fees.
 
@@ -159,7 +159,7 @@ dashboard_export.html      ← Self-contained, opens in any browser
 
 ---
 
-## 🔍 7 Data Quality Issues Fixed
+## 7 Data Quality Issues Fixed
 
 Real healthcare data is messy. This project intentionally includes 7 realistic problems:
 
@@ -175,7 +175,7 @@ Real healthcare data is messy. This project intentionally includes 7 realistic p
 
 ---
 
-## 🏥 Australian Healthcare Context
+## Australian Healthcare Context
 
 | Term | What It Means |
 |------|--------------|
@@ -190,7 +190,7 @@ Real healthcare data is messy. This project intentionally includes 7 realistic p
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ```bash
 # Install dependencies
@@ -211,7 +211,7 @@ python src/recommendations.py
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 - Connect to a live PostgreSQL database instead of flat CSV files
 - Deploy the dashboard on AWS / Azure / GCP
@@ -222,7 +222,7 @@ python src/recommendations.py
 
 ---
 
-## 🧠 Key Learnings
+## Key Learnings
 
 - How to structure an end-to-end analytics project like a real data team
 - Translating business problems into analytical questions
@@ -234,12 +234,11 @@ python src/recommendations.py
 
 ---
 
-## 👩‍💻 Author
+## Author
 
 **Sahana Ramamurthy**
 Master of Data Science
-
-📬 **Connect:**
+ **Connect:**
 - LinkedIn: https://www.linkedin.com/in/sahana-ramamurthy-9640b51a5/
 - GitHub: https://github.com/SahanaRamamurthy
 
