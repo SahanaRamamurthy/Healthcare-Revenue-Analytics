@@ -15,21 +15,35 @@ import plotly.graph_objects as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.io as pio
+from sqlalchemy import create_engine
 
-CLEAN = os.path.join(os.path.dirname(__file__), '..', 'data', 'cleaned')
-PROC  = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
+# ── Database connection ──────────────────────────────────────────────────────
+DB_URL = "postgresql://localhost/healthfirst"
+engine = create_engine(DB_URL)
 
-def load(fname, directory=CLEAN, **kw):
-    p = os.path.join(directory, fname)
+PROC = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
+
+def load_csv(fname, **kw):
+    p = os.path.join(PROC, fname)
     return pd.read_csv(p, **kw) if os.path.exists(p) else pd.DataFrame()
 
-appointments = load('appointments.csv', parse_dates=['appointment_date'])
-patients     = load('patients.csv')
-staff        = load('staff.csv')
-surveys      = load('satisfaction_surveys.csv')
-claims       = load('billing_claims.csv')
-churn_scored = load('patients_churn_scored.csv', directory=PROC)
-segments     = load('patient_segments.csv', directory=PROC)
+def load_db(query, **kw):
+    try:
+        return pd.read_sql(query, engine, **kw)
+    except Exception as e:
+        print(f"DB error: {e}")
+        return pd.DataFrame()
+
+# ── Load from PostgreSQL ─────────────────────────────────────────────────────
+appointments = load_db("SELECT * FROM appointments", parse_dates=['appointment_date'])
+patients     = load_db("SELECT * FROM patients")
+staff        = load_db("SELECT * FROM staff")
+surveys      = load_db("SELECT * FROM satisfaction_surveys", parse_dates=['survey_date'])
+claims       = load_db("SELECT * FROM billing_claims", parse_dates=['claim_date'])
+
+# ── Load processed data from CSV (written by notebooks) ─────────────────────
+churn_scored = load_csv('patients_churn_scored.csv')
+segments     = load_csv('patient_segments.csv')
 
 if not appointments.empty:
     appointments['month'] = appointments['appointment_date'].dt.to_period('M').astype(str)
