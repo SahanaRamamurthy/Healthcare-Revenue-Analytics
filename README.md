@@ -26,7 +26,6 @@ In Month 7, the Australian federal government changed its **Medicare bulk billin
 
 Patients who previously paid nothing out-of-pocket were now asked to pay **gap fees**. Many responded by cancelling appointments, switching clinics, or avoiding care altogether.
 
-The data team's job: **prove this, quantify it, and tell management what to do next.**
 
 ---
 
