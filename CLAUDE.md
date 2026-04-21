@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is **HealthFirst Australia — Revenue Intelligence** — an end-to-end data analytics portfolio project for a fictional Australian private healthcare network. It diagnoses a revenue decline driven by a Medicare bulk billing policy change, predicts patient churn, quantifies billing leakage, and delivers actionable clinical and operational recommendations.
+This is **HealthFirst Australia — Revenue Intelligence** — an end-to-end data analytics, for a fictional Australian private healthcare network. It diagnoses a revenue decline driven by a Medicare bulk billing policy change, predicts patient churn, quantifies billing leakage, and delivers actionable clinical and operational recommendations.
 
 ## Commands
 
