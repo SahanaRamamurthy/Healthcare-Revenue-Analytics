@@ -2999,3 +2999,4 @@ patient_id,full_name,gender,age,age_group,date_of_birth,state,city,postcode,medi
 2998,Sophie Campbell,Female,33,18-34,1990-08-29,VIC,Ballarat,7053,3600 47146 7,bulk_bill,,,Online Booking,2024-05-18,2025-11-26,0,3,128.55,0
 2999,Liam Harris,Male,40,35-54,1984-01-07,VIC,Melbourne,5706,6212 19665 9,private_fund,NIB,Mental Health Disorder,GP Referral,2024-06-08,2024-07-14,0,8,1374.87,0
 3000,Isla Mitchell,Female,51,35-54,1972-03-31,WA,Perth,3291,7674 45860 2,private_fund,Bupa,,Health Fund Referral,2024-07-16,2025-04-25,1,1,94.27,0
+3001,Test Patient,Male,30,25-34,1995-06-15,VIC,Melbourne,3000,1234 56789 0,bulk_bill,,,GP Referral,2026-04-16,2026-04-16,0,1,150.00,0
