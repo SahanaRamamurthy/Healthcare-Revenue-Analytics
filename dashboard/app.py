@@ -21,25 +21,29 @@ from sqlalchemy import create_engine
 DB_URL = "postgresql://localhost/healthfirst"
 engine = create_engine(DB_URL)
 
-PROC = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
+PROC    = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
+CLEANED = os.path.join(os.path.dirname(__file__), '..', 'data', 'cleaned')
+RAW     = os.path.join(os.path.dirname(__file__), '..', 'data', 'raw')
 
-def load_csv(fname, **kw):
-    p = os.path.join(PROC, fname)
+def load_csv(fname, base=PROC, **kw):
+    p = os.path.join(base, fname)
     return pd.read_csv(p, **kw) if os.path.exists(p) else pd.DataFrame()
 
-def load_db(query, **kw):
+def load_db_or_csv(query, csv_name, csv_base=CLEANED, **kw):
     try:
         return pd.read_sql(query, engine, **kw)
     except Exception as e:
         print(f"DB error: {e}")
-        return pd.DataFrame()
+        return load_csv(csv_name, base=csv_base, **kw)
 
-# ── Load from PostgreSQL ─────────────────────────────────────────────────────
-appointments = load_db("SELECT * FROM appointments", parse_dates=['appointment_date'])
-patients     = load_db("SELECT * FROM patients")
-staff        = load_db("SELECT * FROM staff")
-surveys      = load_db("SELECT * FROM satisfaction_surveys", parse_dates=['survey_date'])
-claims       = load_db("SELECT * FROM billing_claims", parse_dates=['claim_date'])
+# ── Load data — PostgreSQL with CSV fallback ─────────────────────────────────
+appointments = load_db_or_csv("SELECT * FROM appointments", "appointments.csv",
+                               parse_dates=['appointment_date'])
+patients     = load_db_or_csv("SELECT * FROM patients",     "patients.csv")
+surveys      = load_db_or_csv("SELECT * FROM satisfaction_surveys", "satisfaction_surveys.csv",
+                               parse_dates=['survey_date'])
+claims       = load_db_or_csv("SELECT * FROM billing_claims", "billing_claims.csv",
+                               parse_dates=['claim_date'])
 
 # ── Load processed data from CSV (written by notebooks) ─────────────────────
 churn_scored = load_csv('patients_churn_scored.csv')

@@ -1,0 +1,62 @@
+[
+  {
+    "category": "Churn Prevention",
+    "priority": "High",
+    "metric": "High-Risk Patient Count (churn score > 0.60)",
+    "current_value": "48 high-risk patients (churn score > 0.60)",
+    "target_value": "Churn score < 0.40 after intervention",
+    "action": "Schedule outreach call within 7 days for 48 high-risk patients \u2014 prioritise by lifetime value",
+    "estimated_impact_aud": 0.0,
+    "rec_id": "REC-01"
+  },
+  {
+    "category": "Medicare Claim Recovery",
+    "priority": "High",
+    "metric": "Claim Leakage \u2014 Bucket 3: No-Show Loss",
+    "current_value": "$298,799 AUD leakage identified",
+    "target_value": "$149,400 AUD recovered (50% fix rate)",
+    "action": "Prioritise Bucket 3: No-Show Loss claims \u2014 $149,400 AUD recoverable at 50% fix rate",
+    "estimated_impact_aud": 149399.62,
+    "rec_id": "REC-02"
+  },
+  {
+    "category": "Bulk Billing Optimisation",
+    "priority": "Medium",
+    "metric": "Bulk Billing Rate (all specialties)",
+    "current_value": "Insufficient historical data to compute 3-month trend",
+    "target_value": "No decline > 5% from prior 3-month average",
+    "action": "Ensure billing_claims_cleaned.csv includes specialty, billing_type, and service_date columns for trend analysis",
+    "estimated_impact_aud": 0.0,
+    "rec_id": "REC-03"
+  },
+  {
+    "category": "Medicare Claim Recovery",
+    "priority": "Medium",
+    "metric": "Claim Leakage \u2014 Bucket 2: Private Ins. Reject/Partial",
+    "current_value": "$43,674 AUD leakage identified",
+    "target_value": "$21,837 AUD recovered (50% fix rate)",
+    "action": "Prioritise Bucket 2: Private Ins. Reject/Partial claims \u2014 $21,837 AUD recoverable at 50% fix rate",
+    "estimated_impact_aud": 21837.07,
+    "rec_id": "REC-04"
+  },
+  {
+    "category": "Medicare Claim Recovery",
+    "priority": "Medium",
+    "metric": "Claim Leakage \u2014 Bucket 4: Self-Pay Defaults",
+    "current_value": "$42,371 AUD leakage identified",
+    "target_value": "$21,185 AUD recovered (50% fix rate)",
+    "action": "Prioritise Bucket 4: Self-Pay Defaults claims \u2014 $21,185 AUD recoverable at 50% fix rate",
+    "estimated_impact_aud": 21185.46,
+    "rec_id": "REC-05"
+  },
+  {
+    "category": "Medicare Claim Recovery",
+    "priority": "Medium",
+    "metric": "Claim Leakage \u2014 Bucket 1: Medicare Rejections",
+    "current_value": "$21,662 AUD leakage identified",
+    "target_value": "$10,831 AUD recovered (50% fix rate)",
+    "action": "Prioritise Bucket 1: Medicare Rejections claims \u2014 $10,831 AUD recoverable at 50% fix rate",
+    "estimated_impact_aud": 10831.02,
+    "rec_id": "REC-06"
+  }
+]
