@@ -242,3 +242,121 @@ def get_feature_importance(result: dict, top_n: int = 15) -> pd.DataFrame:
 
     df = pd.DataFrame({"feature": names, "importance": importances})
     return df.sort_values("importance", ascending=False).head(top_n).reset_index(drop=True)
+
+
+# ---------------------------------------------------------------------------
+# SHAP Explainability
+# ---------------------------------------------------------------------------
+
+def explain_with_shap(result: dict,
+                      features: pd.DataFrame,
+                      save_dir: str = None,
+                      top_n: int = 15) -> dict:
+    """
+    Generate SHAP explanations for the trained churn model.
+
+    Parameters
+    ----------
+    result    : dict returned by train_model()
+    features  : full feature DataFrame (output of build_features())
+    save_dir  : if provided, saves plots to this directory (e.g. 'reports/')
+    top_n     : number of top features to show in summary plot
+
+    Returns
+    -------
+    dict with keys:
+        shap_values  - raw SHAP values array (shape: n_patients x n_features)
+        explainer    - the shap.TreeExplainer object
+        feature_names - list of feature names
+        summary_df   - DataFrame of mean |SHAP| per feature, sorted descending
+    """
+    import shap
+    import matplotlib.pyplot as plt
+
+    model = result["model"]
+    feature_names = result["feature_names"]
+
+    X = features[[c for c in feature_names if c in features.columns]].astype(float)
+
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X)
+
+    summary_df = pd.DataFrame({
+        "feature":   feature_names,
+        "mean_shap": np.abs(shap_values).mean(axis=0),
+    }).sort_values("mean_shap", ascending=False).head(top_n).reset_index(drop=True)
+
+    if save_dir is not None:
+        import os
+        os.makedirs(save_dir, exist_ok=True)
+
+        # Beeswarm plot — shows direction + magnitude per patient
+        plt.figure()
+        shap.summary_plot(shap_values, X, feature_names=feature_names,
+                          max_display=top_n, show=False)
+        plt.tight_layout()
+        plt.savefig(os.path.join(save_dir, "shap_summary.png"), dpi=150, bbox_inches="tight")
+        plt.close()
+
+        # Bar plot — mean |SHAP| global importance
+        plt.figure()
+        shap.summary_plot(shap_values, X, feature_names=feature_names,
+                          plot_type="bar", max_display=top_n, show=False)
+        plt.tight_layout()
+        plt.savefig(os.path.join(save_dir, "shap_importance_bar.png"), dpi=150, bbox_inches="tight")
+        plt.close()
+
+        print(f"Saved: {os.path.join(save_dir, 'shap_summary.png')}")
+        print(f"Saved: {os.path.join(save_dir, 'shap_importance_bar.png')}")
+
+    return {
+        "shap_values":   shap_values,
+        "explainer":     explainer,
+        "feature_names": feature_names,
+        "summary_df":    summary_df,
+    }
+
+
+def explain_single_patient(shap_result: dict,
+                           features: pd.DataFrame,
+                           patient_index: int,
+                           save_dir: str = None) -> None:
+    """
+    Plot a waterfall chart explaining the churn prediction for one patient.
+
+    Parameters
+    ----------
+    shap_result   : dict returned by explain_with_shap()
+    features      : full feature DataFrame (same one passed to explain_with_shap)
+    patient_index : integer row position of the patient in the DataFrame
+    save_dir      : if provided, saves the plot here
+    """
+    import shap
+    import matplotlib.pyplot as plt
+    import os
+
+    shap_values   = shap_result["shap_values"]
+    explainer     = shap_result["explainer"]
+    feature_names = shap_result["feature_names"]
+
+    X = features[[c for c in feature_names if c in features.columns]].astype(float)
+
+    shap_exp = shap.Explanation(
+        values        = shap_values[patient_index],
+        base_values   = explainer.expected_value,
+        data          = X.iloc[patient_index].values,
+        feature_names = feature_names,
+    )
+
+    plt.figure()
+    shap.plots.waterfall(shap_exp, show=False)
+    plt.tight_layout()
+
+    if save_dir is not None:
+        os.makedirs(save_dir, exist_ok=True)
+        path = os.path.join(save_dir, f"shap_patient_{patient_index}.png")
+        plt.savefig(path, dpi=150, bbox_inches="tight")
+        plt.close()
+        print(f"Saved: {path}")
+    else:
+        plt.show()
